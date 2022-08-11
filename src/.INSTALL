@@ -1,0 +1,30 @@
+post_install() {
+    :
+#!/bin/bash
+# Program:
+#	script to be run after package installation
+
+echo "run post install script, action is $1..."
+
+update-mime-database /usr/share/mime || true
+#update-desktop-database || true
+if [ -x "/usr/bin/update-desktop-database" ]; then 
+	update-desktop-database || true
+fi 
+
+}
+post_remove() {
+    :
+#!/bin/bash
+# Program:
+#	script to be run after package removal
+
+echo "run post uninstall script, action is $1 ..."
+
+[ "$1" = "remove" ] || [ "$1" = "purge" ] || exit 0
+
+if [ -L "/usr/bin/zoom" ]; then 
+	rm /usr/bin/zoom 
+fi 
+
+}
